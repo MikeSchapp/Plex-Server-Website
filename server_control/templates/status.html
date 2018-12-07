@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    {% extends 'parent.html' %}
+</head>
+<body>
+
+{% block content %}
+{{ super() }}
+<script>
+$(function() {
+    $('button').click(function() {
+        $.ajax({
+            url: '/service',
+            data: $('form').serialize(),
+            type: 'POST',
+            success: function(response) {
+                console.log(response);
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+    });
+});
+    </script>
+<div class="container m_container_pad"></div>
+<div class="container m_container_pad"></div>
+<div class="container">
+    <div class="row">
+        <div class="col-12"><h1 align="center">Server Status</h1></div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+                {% if server_status == 'off' %}
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h2 class="card-title">Sophia Server</h2>
+                    <h6 class="card-subtitle mb-2 text-muted">Status</h6>
+                    <p class="card-text">off <i class="fa fa-arrow-alt-circle-down fa-1x" style="color:red"></i></p>
+                    <form>
+                    <input type="submit" formaction="/server" class="card-link" formmethod="post" name="server" value="start">
+                    <input type="submit" formaction="/server" class="card-link" formmethod="post" name="server" value="stop">
+                    </form>
+                </div>
+            </div>
+                {% elif server_status == 'on' %}
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h2 class="card-title">Sophia Server</h2>
+                    <h6 class="card-subtitle mb-2 text-muted">Status</h6>
+                    <p class="card-text">on <i class="fa fa-arrow-alt-circle-up fa-1x" style="color:green"></i></p>
+                    <form>
+                    <input type="submit" formaction="/server" class="card-link" formmethod="post" name="server" value="start">
+                    <input type="submit" formaction="/server" class="card-link" formmethod="post" name="server" value="stop">
+                    </form>
+                </div>
+            </div>
+            {% elif server_status == 'missing' %}
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h2 class="card-title">Sophia Server</h2>
+                    <h6 class="card-subtitle mb-2 text-muted">Status</h6>
+                    <p class="card-text">missing <i class="fa fa-arrow-alt-circle-down fa-1x" style="color:black"></i></p>
+                    <form>
+                    <input type="submit" formaction="/server" class="card-link" formmethod="post" name="server" value="start">
+                    <input type="submit" formaction="/server" class="card-link" formmethod="post" name="server" value="stop">
+                    </form>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-12"><h1 align="center">Service Status</h1></div>
+    </div>
+    <div class="row">
+
+            {% for item in container_status %}
+        <div class="col-3">
+                {% if container_status[item] == 'exited' %}
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h2 class="card-title">{{ item }}</h2>
+                    <h6 class="card-subtitle mb-2 text-muted">Status</h6>
+                    <p class="card-text">{{ container_status[item] }} <i class="fa fa-arrow-alt-circle-down fa-1x" style="color:red"></i></p>
+                    <form>
+                    <input type="submit" formaction="/service" class="card-link" formmethod="post" name="{{ item }}" value="start">
+                    <input type="submit" formaction="/service" class="card-link" formmethod="post" name="{{ item }}" value="stop">
+                    </form>
+                </div>
+            </div>
+                {% elif container_status[item] == 'running' %}
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h2 class="card-title">{{ item }}</h2>
+                    <h6 class="card-subtitle mb-2 text-muted">Status</h6>
+                    <p class="card-text">{{ container_status[item] }} <i class="fa fa-arrow-alt-circle-up fa-1x" style="color:green"></i></p>
+                    <form>
+                    <input type="submit" formaction="/service" class="card-link" formmethod="post" name="{{ item }}" value="start">
+                    <input type="submit" formaction="/service" class="card-link" formmethod="post" name="{{ item }}" value="stop">
+                    </form>
+                </div>
+            </div>
+                {% elif container_status[item] == 'paused' %}
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h2 class="card-title">{{ item }}</h2>
+                    <h6 class="card-subtitle mb-2 text-muted">Status</h6>
+                    <p class="card-text">{{ container_status[item] }} <i class="fa fa-pause fa-1x" ></i></p>
+                    <form>
+                    <input type="submit" formaction="/service" class="card-link" formmethod="post" name="{{ item }}" value="start">
+                    <input type="submit" formaction="/service" class="card-link" formmethod="post" name="{{ item }}" value="stop">
+                    </form>
+                </div>
+            </div>
+                {% elif container_status[item] == 'restarting' %}
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h2 class="card-title">{{ item }}</h2>
+                    <h6 class="card-subtitle mb-2 text-muted">Status</h6>
+                    <p class="card-text">{{ container_status[item] }} <i class="fa fa-spinner fa-1x" style="color:yellow"></i></p>
+                    <form>
+                    <input type="submit" formaction="/service" class="card-link" formmethod="post" name="{{ item }}" value="start">
+                    <input type="submit" formaction="/service" class="card-link" formmethod="post" name="{{ item }}" value="stop">
+                    </form>
+                </div>
+            </div>
+            {% elif container_status[item] == 'missing' %}
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h2 class="card-title">{{ item }}</h2>
+                    <h6 class="card-subtitle mb-2 text-muted">Status</h6>
+                    <p class="card-text">{{ container_status[item] }} <i class="fa fa-arrow-alt-circle-down fa-1x" style="color:black"></i></p>
+                    <form>
+                    <input type="submit" formaction="/service" class="card-link" formmethod="post" name="{{ item }}" value="start">
+                    <input type="submit" formaction="/service" class="card-link" formmethod="post" name="{{ item }}" value="stop">
+                    </form>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+            {% endfor %}
+    </div>
+</div>
+
+{% endblock %}
+</body>
+</html>
+{{ item }}
