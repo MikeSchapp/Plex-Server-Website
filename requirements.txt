@@ -3,4 +3,5 @@ bcrypt
 pymongo
 requests
 docker
+pytest
 
