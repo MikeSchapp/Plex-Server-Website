@@ -1,6 +1,6 @@
 import docker
 import docker.errors
-from secret_store.config import *
+from Sophia.secret_store.config import *
 
 
 class DockerApi:
