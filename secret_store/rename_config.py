@@ -6,3 +6,4 @@ docker_media_file = 'placeholder'
 idrac_ip = 'placeholder'
 idrac_user = 'placeholder'
 idrac_pw = 'placeholder'
+docker_ip =""
