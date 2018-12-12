@@ -1,6 +1,6 @@
 from pymongo import MongoClient
 import bcrypt
-from secret_store.config import *
+from Sophia.secret_store.config import *
 
 
 class MongoApi:

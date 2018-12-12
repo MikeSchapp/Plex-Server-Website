@@ -3,10 +3,10 @@ from flask import render_template
 from flask import request
 from flask import session
 from flask import redirect
-from server_control.objects import password_commands
-from server_control.objects.docker_commands import *
-from server_control.objects.idrac_commands import *
-from server_control.objects.mongo_commands import *
+from Sopohia.server_control.objects import password_commands
+from Sophia.server_control.objects.docker_commands import *
+from Sophia.server_control.objects.idrac_commands import *
+from Sophia.server_control.objects.mongo_commands import *
 from flask import flash
 from datetime import timedelta
 import time
