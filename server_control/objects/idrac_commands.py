@@ -8,6 +8,7 @@ class IdracApi:
         self.retrieve_idrac_cookie()
 
     def retrieve_idrac_cookie(self):
+        self._session = requests.Session()
         data = {
             'user': idrac_user,
             'password': idrac_pw
@@ -38,6 +39,9 @@ class IdracApi:
                 'get': 'pwState'
             }
             r = session.post(idrac_ip + '/data?get=pwState', data, verify=False)
+            if r.status_code != 200:
+                self.retrieve_idrac_cookie()
+                self.retrieve_idrac_data()
             if "0" in str(r.content):
                 status = "off"
             else:
