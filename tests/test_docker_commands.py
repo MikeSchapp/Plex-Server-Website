@@ -1,5 +1,5 @@
 from mock import patch
-from server_control.objects.docker_commands import DockerApi
+from Sophia.server_control.objects.docker_commands import DockerApi
 
 
 def test_docker_images_pull():
