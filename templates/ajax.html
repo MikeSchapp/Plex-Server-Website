@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Plex Server</title>
+    {% extends 'parent.html' %}
+</head>
+<body>
+
+{% block content %}
+{{ super() }}
+<script type=text/javascript>
+  $(function() {
+    $().ready(function() {
+      $("#load").load('/test_render')
+    });
+  });
+
+</script>
+<div id="load">Loading</div>
+
+
+{% endblock %}
+</body>
+</html>
