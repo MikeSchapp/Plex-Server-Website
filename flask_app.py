@@ -1,5 +1,3 @@
-import os
-
 from flask import Flask
 from flask import render_template
 from flask import request
@@ -8,11 +6,10 @@ from flask import redirect
 from flask import jsonify
 from server_control.objects import password_commands
 from server_control.objects.docker_commands import *
-from server_control.objects.idrac_commands import *
+from server_control.objects.server.idrac_commands_dell import *
 from server_control.objects.mongo_commands import *
 from flask import flash
 from datetime import timedelta
-import time
 
 app = Flask(__name__)
 app._static_folder = 'static/'
