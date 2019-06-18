@@ -1,8 +1,11 @@
+import os
+
 from flask import Flask
 from flask import render_template
 from flask import request
 from flask import session
 from flask import redirect
+from flask import jsonify
 from server_control.objects import password_commands
 from server_control.objects.docker_commands import *
 from server_control.objects.idrac_commands import *
@@ -25,7 +28,7 @@ def homepage():
     if not session.get("logged_in?"):
         return redirect('/login')
     else:
-        return redirect('/status')
+        return redirect('/ajax')
 
 
 @app.route("/login", methods=["get", "post"])
@@ -36,7 +39,7 @@ def login():
         if password_commands.check_plex_un_pw(username=un_check, password=pw_check):
             session["logged_in?"] = True
             flash('Successfully logged in!')
-            return redirect("/status")
+            return redirect("/ajax")
         else:
             flash('Incorrect username, or password')
             return render_template('login.html')
@@ -80,7 +83,7 @@ def start_service():
             }
         else:
             container_status = service.fake_container_status()
-        return render_template('status.html', container_status=container_status, server_status=server_status)
+        return render_template('ajax.html', container_status=container_status, server_status=server_status)
 
 
 @app.route("/server", methods=["post"])
@@ -93,7 +96,14 @@ def start_server():
             server.turn_on()
         elif server_action == 'stop':
             server.turn_off()
-            time.sleep(2)
+        return render_template('ajax.html')
+
+
+@app.route("/server_status")
+def server_status_ajax():
+    if not session.get("logged_in?"):
+        return redirect('/login')
+    else:
         server_status = server.retrieve_idrac_data()
         if server_status is not "on":
             container_status = {
@@ -102,13 +112,37 @@ def start_server():
             }
         else:
             container_status = service.fake_container_status()
-        return render_template('status.html', container_status=container_status, server_status=server_status)
+        return jsonify(server_status)
+
+
+@app.route("/test_render")
+def test_render():
+    if not session.get("logged_in?"):
+        return redirect('/login')
+    else:
+        server_status = server.retrieve_idrac_data()
+        if server_status is not "on":
+            container_status = {
+                "plex": "exited",
+                "minecraft": "exited"
+            }
+        else:
+            container_status = service.fake_container_status()
+        return render_template('ajax_status.html', container_status=container_status, server_status=server_status)
 
 
 @app.route("/logout", methods=["post", "get"])
 def logout():
     session['logged_in?'] = False
     return redirect('/')
+
+
+@app.route("/ajax")
+def ajax():
+    if not session.get("logged_in?"):
+        return redirect('/login')
+    else:
+        return render_template('ajax.html')
 
 
 if __name__ == '__main__':
