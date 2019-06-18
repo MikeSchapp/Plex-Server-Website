@@ -1,4 +1,4 @@
-#Plex Server Website
+# Plex Server Website
 
 This repo creates a frontend hosted on a raspberry pi with gunicorn to create a website that allows a user to remotely
 turn on and off a server and launch plex. Currently the docker commands are in the works, however the functionality for 
