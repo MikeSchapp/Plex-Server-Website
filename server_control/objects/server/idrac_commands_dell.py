@@ -21,6 +21,7 @@ class IdracApi:
             else:
                 retry_count += 1
                 continue
+        return r
 
     def logout(self):
         r = self._session.get(idrac_ip + '/data/logout', verify=False)
