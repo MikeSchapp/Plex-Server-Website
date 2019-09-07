@@ -2,6 +2,7 @@ import bcrypt
 
 from secret_store.config import plex_login, plex_password, flask_secret_key
 
+
 def hash_pass(**kwargs):
     password = kwargs["password"]
     b_password = bytes(password, 'ascii')

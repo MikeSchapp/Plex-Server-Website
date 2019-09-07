@@ -26,8 +26,7 @@ class MongoApi:
             hashed_password = hashed_account["pw"]
             if bcrypt.checkpw(encoded_password, hashed_password):
                 return True
-            else:
-                return False
+            return False
         except TypeError:
             return False
 
