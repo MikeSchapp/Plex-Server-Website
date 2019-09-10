@@ -22,7 +22,7 @@ class IdracApi:
                 else:
                     retry_count += 1
                     continue
-            except ConnectionError:
+            except Exception:
                 return
         return r
 
