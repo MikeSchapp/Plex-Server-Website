@@ -15,12 +15,15 @@ class IdracApi:
         }
         retry_count = 0
         while retry_count < 3:
-            r = self._session.post(idrac_ip + '/data/login', data, verify=False)
-            if self.check_cookie():
-                return r
-            else:
-                retry_count += 1
-                continue
+            try:
+                r = self._session.post(idrac_ip + '/data/login', data, verify=False)
+                if self.check_cookie():
+                    return r
+                else:
+                    retry_count += 1
+                    continue
+            except ConnectionError:
+                return
         return r
 
     def logout(self):
