@@ -1,9 +1,0 @@
-docker_un = 'placeholder'
-docker_pw = 'placeholder'
-docker_config_file = 'placeholder'
-docker_transcode_file = 'placeholder'
-docker_media_file = 'placeholder'
-idrac_ip = 'placeholder'
-idrac_user = 'placeholder'
-idrac_pw = 'placeholder'
-docker_ip =""
