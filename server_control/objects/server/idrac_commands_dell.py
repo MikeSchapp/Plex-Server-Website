@@ -1,3 +1,5 @@
+import ssl
+
 import requests
 import urllib.request
 import urllib.error
@@ -81,7 +83,9 @@ class IdracApi:
     @staticmethod
     def check_url_up():
         try:
-            if urllib.request.urlopen(idrac_ip, timeout=5).getcode() == 200:
+            context = ssl._create_unverified_context()
+            if urllib.request.urlopen(idrac_ip, timeout=5, context=context).getcode() == 200:
                 return True
         except urllib.error.URLError:
+            print("False")
             return False
