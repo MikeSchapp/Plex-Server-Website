@@ -1,0 +1,10 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: Plex-Server-Website
+  annotations:
+    github.com/project-slug: MikeSchapp/Plex-Server-Website
+spec:
+  type: other
+  lifecycle: unknown
+  owner: Michael Schappacher
