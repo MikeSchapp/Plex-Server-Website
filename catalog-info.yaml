@@ -4,7 +4,11 @@ metadata:
   name: Plex-Server-Website
   annotations:
     github.com/project-slug: MikeSchapp/Plex-Server-Website
+  tags:
+    - css
+    - python
 spec:
-  type: other
-  lifecycle: unknown
+  type: service
+  lifecycle: development
   owner: Michael Schappacher
+  system: home-automation
