@@ -10,5 +10,5 @@ metadata:
 spec:
   type: service
   lifecycle: development
-  owner: michael.schappacher
+  owner: best
   system: home-automation
